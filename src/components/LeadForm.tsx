@@ -5,10 +5,9 @@ import { ArrowRight, CheckCircle, Loader2 } from 'lucide-react';
 interface Props {
   onSuccess?: () => void;
   className?: string;
-  isEmbedded?: boolean;
 }
 
-export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedded = false }) => {
+export const LeadForm: React.FC<Props> = ({ onSuccess, className = "" }) => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
@@ -20,14 +19,11 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
     setTimeout(() => {
       console.log('Lead Captured:', formData);
       setIsSubmitting(false);
       setIsSuccess(true);
       setFormData({ name: '', phone: '', interest: 'General Inquiry' });
-      
-      // Auto close or reset
       if (onSuccess) {
          setTimeout(() => {
              onSuccess();
@@ -45,29 +41,28 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
 
   if (isSuccess) {
     return (
-      <div className={`p-8 text-center flex flex-col items-center justify-center h-full ${className} ${!className.includes('bg-') ? 'bg-black border border-yellow-500' : ''}`}>
-        <CheckCircle className="w-16 h-16 text-yellow-500 mb-4 animate-bounce" />
+      <div className={`bg-black border border-yellow-500 p-8 text-center ${className}`}>
+        <div className="flex justify-center mb-4">
+          <CheckCircle className="w-16 h-16 text-yellow-500" />
+        </div>
         <h3 className="text-2xl font-heading font-black text-white uppercase mb-2">You're In!</h3>
-        <p className="text-zinc-400">We'll be in touch shortly.</p>
+        <p className="text-zinc-400">We'll call you shortly.</p>
       </div>
     );
   }
 
-  // Base classes that can be overridden by className prop using ! modifier or specifically handled
-  const containerClasses = `p-8 relative overflow-hidden ${className} ${!className.includes('bg-') ? 'bg-black border border-zinc-800' : ''}`;
-
   return (
-    <div className={containerClasses}>
-      <div className="mb-6 text-center">
-        <h3 className="text-2xl md:text-3xl font-heading font-black text-white uppercase mb-1">
-          {isEmbedded ? "Start Now" : "Claim Free Pass"}
+    <div className={`bg-black border border-zinc-800 p-8 relative overflow-hidden ${className}`}>
+      <div className="mb-8 text-center">
+        <h3 className="text-3xl font-heading font-black text-white uppercase mb-2">
+          Claim Free Pass
         </h3>
         <p className="text-yellow-500 text-xs font-bold uppercase tracking-widest">
-          {isEmbedded ? "Join Guwahati's Best" : "Limited Spots Available"}
+          Limited Spots Available
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="group">
           <input
             type="text"
@@ -76,7 +71,7 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
             placeholder="FULL NAME"
             value={formData.name}
             onChange={handleChange}
-            className="w-full bg-zinc-900/80 border-b-2 border-zinc-800 text-white px-4 py-3 focus:border-yellow-500 focus:bg-black transition-all outline-none placeholder:text-zinc-600 font-bold text-sm tracking-wider uppercase"
+            className="w-full bg-zinc-900 border-b-2 border-zinc-800 text-white px-4 py-4 focus:border-yellow-500 focus:bg-zinc-800 transition-all outline-none placeholder:text-zinc-600 font-bold text-sm tracking-wider uppercase"
           />
         </div>
 
@@ -88,8 +83,7 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
             placeholder="PHONE NUMBER"
             value={formData.phone}
             onChange={handleChange}
-            pattern="[0-9]{10}"
-            className="w-full bg-zinc-900/80 border-b-2 border-zinc-800 text-white px-4 py-3 focus:border-yellow-500 focus:bg-black transition-all outline-none placeholder:text-zinc-600 font-bold text-sm tracking-wider uppercase"
+            className="w-full bg-zinc-900 border-b-2 border-zinc-800 text-white px-4 py-4 focus:border-yellow-500 focus:bg-zinc-800 transition-all outline-none placeholder:text-zinc-600 font-bold text-sm tracking-wider uppercase"
           />
         </div>
 
@@ -98,7 +92,7 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
             name="interest"
             value={formData.interest}
             onChange={handleChange}
-            className="w-full bg-zinc-900/80 border-b-2 border-zinc-800 text-white px-4 py-3 focus:border-yellow-500 focus:bg-black transition-all outline-none font-bold text-sm tracking-wider uppercase text-zinc-400"
+            className="w-full bg-zinc-900 border-b-2 border-zinc-800 text-white px-4 py-4 focus:border-yellow-500 focus:bg-zinc-800 transition-all outline-none font-bold text-sm tracking-wider uppercase text-zinc-400"
           >
             <option value="General Inquiry">Select Style</option>
             <option value="Contemporary">Contemporary</option>
@@ -111,9 +105,9 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-yellow-500 hover:bg-white text-black font-black uppercase tracking-widest py-4 flex items-center justify-center gap-2 transition-all mt-2 group"
+          className="w-full bg-yellow-500 hover:bg-white text-black font-black uppercase tracking-widest py-5 flex items-center justify-center gap-2 transition-all mt-4"
         >
-          {isSubmitting ? <Loader2 className="animate-spin" /> : <>Get Access <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></>}
+          {isSubmitting ? <Loader2 className="animate-spin" /> : <>Get Access <ArrowRight className="w-5 h-5" /></>}
         </button>
       </form>
     </div>

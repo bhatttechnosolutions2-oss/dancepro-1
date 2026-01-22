@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ArrowRight, Play } from 'lucide-react';
 import { LeadForm } from './LeadForm';
 
 interface Props {
@@ -6,98 +7,121 @@ interface Props {
 }
 
 const CAROUSEL_IMAGES = [
-  "https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=1920&auto=format&fit=crop", // Male Jump
-  "https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?q=80&w=1920&auto=format&fit=crop", // Urban Style
-  "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=1920&auto=format&fit=crop"  // Dramatic Silhouette
+  "https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=1920&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=1920&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1555597408-26bc8e548a46?q=80&w=1920&auto=format&fit=crop"
 ];
 
 export const Hero: React.FC<Props> = ({ onOpenModal }) => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (!isHovered) {
-      const timer = setInterval(() => {
-        setCurrentImage((prev) => (prev + 1) % CAROUSEL_IMAGES.length);
-      }, 4000);
-      return () => clearInterval(timer);
-    }
-  }, [isHovered]);
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % CAROUSEL_IMAGES.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section 
-      id="home" 
-      className="relative min-h-[90vh] md:min-h-screen flex items-center pt-20 pb-12 overflow-hidden"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Background Carousel */}
-      <div className="absolute inset-0 z-0">
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-black pt-20 pb-10 lg:pt-0 lg:pb-0">
+      
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
         {CAROUSEL_IMAGES.map((img, index) => (
           <div 
             key={index}
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentImage ? 'opacity-100' : 'opacity-0'
+              index === currentImage ? 'opacity-60' : 'opacity-0'
             }`}
           >
             <img 
               src={img} 
-              alt="Dance studio atmosphere" 
-              className="w-full h-full object-cover"
+              alt="Dance studio" 
+              className="w-full h-full object-cover scale-105 animate-[pulse_10s_infinite]"
             />
           </div>
         ))}
-        
-        {/* Permanent Overlays for readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent md:to-black/30"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           
-          {/* Text Content */}
-          <div className="max-w-2xl space-y-6 animate-slide-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-500/30 text-yellow-500 font-semibold text-sm uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span>
-              New Batches in Guwahati
+          {/* Left Content (Text) */}
+          <div className="w-full lg:w-1/2 pt-10 lg:pt-0">
+            <div className="inline-flex items-center gap-2 mb-6 animate-fade-in">
+               <span className="px-3 py-1 bg-yellow-500 text-black text-xs font-black uppercase tracking-widest skew-x-[-12deg]">
+                  <span className="block skew-x-[12deg]">New Batches Open</span>
+               </span>
+               <span className="h-px w-20 bg-yellow-500/50"></span>
             </div>
-            
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-black text-white leading-tight">
-              UNLEASH YOUR <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-yellow-500">INNER DANCER</span>
+
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-black text-white leading-[0.9] tracking-tight mb-8 animate-slide-up">
+              MOVE WITH <br />
+              <span className="text-stroke tracking-widest relative inline-block">PURPOSE</span> <br />
+              <span className="text-yellow-500 tracking-widest">DANCE PRO</span>
             </h1>
-            
-            <p className="text-lg md:text-xl text-zinc-300 max-w-lg leading-relaxed">
-              Join <strong>Dance Pro Studio</strong> in Birubari. Professional training in Hip-Hop, Contemporary, and Bollywood for all ages.
+
+            <p className="text-lg md:text-xl text-zinc-300 max-w-xl mb-10 leading-relaxed border-l-4 border-yellow-500 pl-6 animate-slide-up" style={{animationDelay: '0.2s'}}>
+              Guwahati's premier dance academy. Master <strong>Hip-Hop, Contemporary & Bollywood</strong>. 
             </p>
-            
-            {/* CTA Buttons - Now visible on Desktop too */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+
+            {/* Mobile/Tablet Only Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 lg:hidden animate-slide-up" style={{animationDelay: '0.4s'}}>
               <button 
                 onClick={onOpenModal}
-                className="bg-yellow-500 text-black px-8 py-3 rounded-lg font-bold uppercase text-center hover:bg-yellow-400 transition-colors shadow-lg shadow-yellow-500/20 transform hover:scale-105 duration-200"
+                className="group relative bg-yellow-500 text-black px-8 py-5 font-black uppercase tracking-widest overflow-hidden text-center"
               >
-                Book Free Trial
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  Book Free Trial <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0 mix-blend-screen"></div>
               </button>
-              <a href="tel:+917035419267" className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-3 rounded-lg font-bold uppercase text-center hover:bg-white/20 transition-colors">
-                Call Now
+              
+              <a 
+                href="#programs"
+                className="group px-8 py-5 border border-white/20 text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-3 text-center"
+              >
+                <Play className="w-4 h-4 fill-current" /> View Programs
               </a>
             </div>
 
-            <div className="hidden lg:flex items-center gap-8 pt-8 text-sm font-semibold text-zinc-400 uppercase tracking-widest">
-              <span>• Certified Instructors</span>
-              <span>• Studio Events</span>
-              <span>• All Ages</span>
-            </div>
+            {/* Desktop Secondary CTA (Since form is on right) */}
+             <div className="hidden lg:flex gap-4 animate-slide-up" style={{animationDelay: '0.4s'}}>
+               <a 
+                href="#programs"
+                className="group px-8 py-4 border-b border-white text-white font-bold uppercase tracking-widest hover:text-yellow-500 hover:border-yellow-500 transition-colors flex items-center gap-3"
+              >
+                <Play className="w-4 h-4 fill-current" /> Explore Programs
+              </a>
+             </div>
           </div>
 
-          {/* Form Container (Desktop: Right Side, Mobile: Hidden/Stacked below) */}
-          <div className="w-full max-w-md mx-auto lg:ml-auto" id="register">
-            <LeadForm />
+          {/* Right Content - Embedded Form (Desktop Only) */}
+          <div className="hidden lg:block w-full lg:w-1/2 max-w-md ml-auto animate-slide-up delay-300">
+             <div className="relative">
+                {/* Glow Effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500 to-transparent opacity-30 blur-lg rounded-xl"></div>
+                <div className="relative bg-zinc-900/90 backdrop-blur-md border border-yellow-500/20 rounded-xl overflow-hidden shadow-2xl">
+                   <div className="h-1 w-full bg-yellow-500"></div>
+                   <LeadForm 
+                      className="!bg-transparent !border-0" 
+                      isEmbedded={true}
+                   />
+                </div>
+             </div>
           </div>
 
         </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 right-10 hidden lg:flex flex-col items-center gap-4 animate-bounce">
+        <span className="vertical-text text-zinc-500 text-xs font-bold uppercase tracking-[0.3em] rotate-180" style={{writingMode: 'vertical-rl'}}>Scroll Down</span>
+        <div className="w-px h-12 bg-zinc-800"></div>
       </div>
     </section>
   );

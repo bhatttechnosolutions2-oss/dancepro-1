@@ -46,7 +46,7 @@ export const Navbar: React.FC<Props> = ({ onOpenModal }) => {
         <div className="flex items-center justify-between">
           
           {/* Brand */}
-          <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="flex items-center gap-3 group cursor-pointer">
+          <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="flex items-center gap-3 group">
              <div className="relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border-2 border-yellow-500 rounded-full group-hover:bg-yellow-500 transition-colors duration-300">
                 <span className="font-heading font-black text-white group-hover:text-black text-xl md:text-2xl">D</span>
              </div>
