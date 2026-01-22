@@ -39,21 +39,74 @@ export const Navbar: React.FC<Props> = ({ onOpenModal }) => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
       isScrolled 
-        ? 'bg-black/90 backdrop-blur-xl border-zinc-800 py-3' 
-        : 'bg-transparent border-transparent py-6'
+        ? 'bg-black/90 backdrop-blur-xl border-zinc-800 py-2' 
+        : 'bg-transparent border-transparent py-4'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Brand */}
+          {/* Brand - Custom SVG Logo */}
           <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="flex items-center gap-3 group cursor-pointer">
-             <div className="relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border-2 border-yellow-500 rounded-full group-hover:bg-yellow-500 transition-colors duration-300">
-                <span className="font-heading font-black text-white group-hover:text-black text-xl md:text-2xl">D</span>
-             </div>
-             <div className="flex flex-col">
-                <span className="font-heading font-black text-lg md:text-xl text-white tracking-tighter leading-none uppercase">Dance<span className="text-yellow-500">Pro</span></span>
-                <span className="text-[10px] text-zinc-400 uppercase tracking-[0.3em] leading-none">Studio</span>
-             </div>
+             <svg 
+               viewBox="0 0 200 220" 
+               className="h-28 w-auto transition-transform duration-300 group-hover:scale-105"
+               xmlns="http://www.w3.org/2000/svg"
+               shapeRendering="geometricPrecision"
+             >
+                {/* Yellow Ring - Thicker and more vibrant */}
+                <path 
+                  d="M 35 155 A 85 85 0 1 1 165 155" 
+                  stroke="#facc15" 
+                  strokeWidth="5" 
+                  fill="none" 
+                  strokeLinecap="round"
+                  className="drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]"
+                />
+                
+                {/* Dancers Silhouette (White) - Refined & Smoother */}
+                <g transform="translate(45, 25) scale(0.42)" fill="white">
+                   {/* Male Dancer */}
+                   <circle cx="160" cy="50" r="16" />
+                   <path d="M145,75 C140,75 130,85 135,100 L130,160 L120,280 L145,280 L155,160 L165,100 C170,85 160,75 145,75 Z" />
+                   <path d="M170,80 Q190,60 215,40 L205,30 Q180,55 160,75 Z" /> {/* Arm up */}
+
+                   {/* Female Dancer */}
+                   <circle cx="120" cy="110" r="14" />
+                   <path d="M105,125 C95,125 90,135 95,150 C100,165 110,170 115,180 L125,200 L70,185 L60,205 L115,230 L135,280 L155,280 L140,200 C150,180 145,140 135,130 C125,120 115,125 105,125 Z" />
+                </g>
+                
+                {/* Dance Pro Text (Red Script) */}
+                <text 
+                  x="100" 
+                  y="180" 
+                  textAnchor="middle" 
+                  fontFamily="'Great Vibes', cursive" 
+                  fontSize="46" 
+                  fill="#ff2222"
+                  className="drop-shadow-md"
+                  style={{ textShadow: '2px 2px 0px rgba(0,0,0,1)' }}
+                >
+                  Dance Pro
+                </text>
+                
+                {/* Studio Text (White Sans) */}
+                <text 
+                  x="100" 
+                  y="205" 
+                  textAnchor="middle" 
+                  fontFamily="'Montserrat', sans-serif" 
+                  fontSize="13" 
+                  fontWeight="900"
+                  fill="white" 
+                  letterSpacing="5"
+                >
+                  STUDIO
+                </text>
+                
+                {/* Decorative Lines */}
+                <line x1="20" y1="201" x2="60" y2="201" stroke="white" strokeWidth="1.5" opacity="0.9" />
+                <line x1="140" y1="201" x2="180" y2="201" stroke="white" strokeWidth="1.5" opacity="0.9" />
+             </svg>
           </a>
 
           {/* Desktop Nav */}

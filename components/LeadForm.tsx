@@ -20,13 +20,21 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
+    
+    // Construct WhatsApp URL
+    const phoneNumber = "917035419267";
+    const message = `*New Inquiry from Website*%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Interest:* ${formData.interest}`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
     setTimeout(() => {
       console.log('Lead Captured:', formData);
       setIsSubmitting(false);
       setIsSuccess(true);
       setFormData({ name: '', phone: '', interest: 'General Inquiry' });
       
+      // Redirect to WhatsApp
+      window.open(whatsappUrl, '_blank');
+
       // Auto close or reset
       if (onSuccess) {
          setTimeout(() => {
@@ -36,7 +44,7 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
       } else {
          setTimeout(() => setIsSuccess(false), 5000);
       }
-    }, 1500);
+    }, 1000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -47,8 +55,8 @@ export const LeadForm: React.FC<Props> = ({ onSuccess, className = "", isEmbedde
     return (
       <div className={`p-8 text-center flex flex-col items-center justify-center h-full ${className} ${!className.includes('bg-') ? 'bg-black border border-yellow-500' : ''}`}>
         <CheckCircle className="w-16 h-16 text-yellow-500 mb-4 animate-bounce" />
-        <h3 className="text-2xl font-heading font-black text-white uppercase mb-2">You're In!</h3>
-        <p className="text-zinc-400">We'll be in touch shortly.</p>
+        <h3 className="text-2xl font-heading font-black text-white uppercase mb-2">Redirecting...</h3>
+        <p className="text-zinc-400">Opening WhatsApp to complete your inquiry.</p>
       </div>
     );
   }
